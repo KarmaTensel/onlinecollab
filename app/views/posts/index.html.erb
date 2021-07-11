@@ -1,0 +1,44 @@
+<% @posts.each do |post| %>
+
+  <div class="jumbotron">
+    <h2 class="mb-3"><strong>Title: </strong><%= post.title %></h2>
+
+    <p>
+      <strong>Tags: </strong><%= post.tags %>
+    </p>
+
+    <p>
+      <strong>Posted by: </strong><%= post.user.email %>
+      <!-- displaying the name original creator of the post -->
+    </p>
+
+    <p>
+      <strong>Post: </strong><%= post.content %>
+      <!-- displaying the name original creator of the post -->
+    </p>
+
+    <p>
+      <strong>Posted on: </strong><%= post.created_at.strftime("%A, %B %e, %Y") %>, at <%= post.created_at.strftime("%I:%M %P") %> <br>
+      <!-- <strong>Updated at: </strong><%= post.updated_at.strftime("%I:%M %P") %>, <%= post.created_at.strftime("%D")%> -->
+    </p>
+
+    <p class="lead">
+      <%= link_to 'Read', post, class:"btn btn-success"%>
+      
+      <% if current_user || !!@user.admin %>
+      <%= link_to 'Edit', edit_post_path(post), class:"btn btn-warning"%>
+      <%= link_to 'Destroy', post, method: :delete, data: { confirm: 'Are you sure?' }, class:"btn btn-danger"%>
+      <% end %>
+    </p>
+
+  </div>
+
+  <hr class="bg-dark border-1 border-top border-dark">
+
+<% end %>
+
+<br>
+
+<% if user_signed_in? %>
+  <%= link_to 'Ask a Question?', new_post_path, class:"btn btn-primary"%>
+<% end %>

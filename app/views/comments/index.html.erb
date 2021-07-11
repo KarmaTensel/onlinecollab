@@ -1,0 +1,16 @@
+<% @comments.each do |comment| %>
+    <p>
+    <strong>Title:</strong>
+    <%= @comment.post_id %>
+    </p>
+
+    <p>
+    <strong>Details:</strong>
+    <%= @comment.user_id %>
+    </p>
+
+    <p>
+    <strong>Details:</strong>
+    <%= @comment.content %>
+    </p>
+<% end %>
