@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-light" style="background-color: #e3f2fd;">
+<nav class="navbar navbar-light bg-light" style="background-color: #e3f2fd;">
   
   <div class="container">
     <div>
@@ -15,27 +15,7 @@
 
     <% if user_signed_in? %>
 
-      <form class="d-flex">
-        <input class="form-control me-2" type="search" placeholder="Search for Posts here" aria-label="Search">
-        <button type="submit" class="btn btn-outline-success">Search</button>
-      </form>
-
-      <div>
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              </a>
-              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <li><a class="dropdown-item" href="#">Account</a></li>
-                <li><a class="dropdown-item" href="#">Settings</a></li>
-                <li><hr class="dropdown-divider"></li>
-                <li><%= link_to 'Sign Out', destroy_user_session_path, method: :delete, class: "nav-link"%></li>
-              </ul>
-            </li>
-
-        </ul>
-      </div>
+      <%= link_to 'Sign Out', destroy_user_session_path, method: :delete, class:"btn btn-danger"%>
       
     <% end %>
       

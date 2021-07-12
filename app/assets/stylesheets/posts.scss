@@ -1,0 +1,27 @@
+.d-flex{
+    margin-top: 7px;
+    margin-bottom: 20px;
+}
+
+.hr{
+    width: 50%;
+    margin-left: 25%;
+}
+
+.separator {
+    display: flex;
+    align-items: flex-start;
+    text-align: left;
+    font-size: medium;
+}
+
+.separator::before,
+.separator::after{
+    content: '';
+    flex: 1;
+    border-bottom: 1px solid #000;
+}
+
+.separator:not(:empty)::before{
+    margin-right: .25em;
+}

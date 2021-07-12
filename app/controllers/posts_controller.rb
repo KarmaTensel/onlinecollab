@@ -6,8 +6,8 @@ class PostsController < ApplicationController
 
   # GET /posts or /posts.json
   def index
-    # @posts = Post.all.reverse
-    @posts = Post.all.with_rich_text_content_and_embeds.reverse
+    @posts = Post.all.reverse
+    # @posts = Post.all.with_rich_text_content_and_embeds.reverse
 
   end
 

@@ -1,33 +1,25 @@
 class CommentsController < ApplicationController
 	
-	def index
-		@comment = Comment.all.with_rich_text_content
-	end
+	# def index
+	# 	@comment = Comment.all.with_rich_text_content
+	# end
 
-	def new
-		user = session[:id]
-		@comment = Comment.new(post_id: params[:post_id])
-		@post = Post.find(params[:post_id])
-	end
+	# def new
+	# 	@comment = current_user.comment.build
+	# end
 
 	def create
-		# @post = Post.find(params[:id])
-
-		# @comment = current_user.comments.new(comment_params)
-     	# @postid = params[:id]	
-		# @comment.user_id = current_user.id
 
 		@post = Post.find(params[:post_id])
 		@comment = @post.comments.create(comment_params)
-		redirect_to posts_path(@post)
+		@comment.user_id = current_user.id
 		
-		# if @comment.save
-      	# 	flash[:notice] = "comment created."
-      	# 	redirect_to '/posts'
-    	# else
-      	# 	flash[:error] = "Error creating comment."
-      	# 	redirect_to '/posts'
-    	# end
+		if @comment.save
+      		flash[:notice] = "Comment created."
+      		redirect_to post_path(@post)
+    	else
+      		flash.now[:danger] = "Error creating comment."
+    	end
 	end
 
 	def edit
@@ -37,11 +29,11 @@ class CommentsController < ApplicationController
 	def destroy
 		@comment = Comment.find(params[:id])
 		@comment.destroy
-		redirect_to
+		redirect_to '/posts'
 	end
 
 	private
 		def comment_params
-			params.require(:comment).permit(:post_id, :user_id, :content)
+			params.require(:comment).permit(:post_id, :body)
 		end
 end

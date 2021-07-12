@@ -17,6 +17,3 @@
 @import "./actiontext.scss";
 @import "trix/dist/trix";
 
-body {
-    background-color: #F8F8F8 !important;
-  }
