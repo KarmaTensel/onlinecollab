@@ -2,9 +2,9 @@ class PostsController < ApplicationController
   before_action :set_post, only: %i[ show edit update destroy ]
   skip_before_action :authenticate_user!, :only => [:index]
   before_action :correct_user, only: [:edit, :update, :destroy]
-  # include ActionText::Attachable
 
-  # GET /posts or /posts.json
+
+
   def index
     @posts = Post.all.reverse
     # @posts = Post.all.with_rich_text_content_and_embeds.reverse

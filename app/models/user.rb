@@ -1,6 +1,6 @@
 class User < ApplicationRecord
 
-  enum role: [:user, :moderator, :admin]
+  enum role: [:user, :employee, :moderator, :admin]
   after_initialize :set_default_role, :if => :new_record?
 
   def set_default_role
@@ -12,5 +12,5 @@ class User < ApplicationRecord
 
           has_many :posts, dependent: :destroy
           has_many :comments, dependent: :destroy
-          validates_associated :posts 
+          validates_associated :posts
 end
