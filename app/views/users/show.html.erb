@@ -1,3 +1,9 @@
 <h3>User</h3>
+<br>
+
+<% if @post.user_id == current_user.id && @post.status == 'Archive' %>
+  <h4>Draft</h4>
+  <strong><%= Post.draft_count %> </strong> draft post.<br><br>
+<% end %>
 <p>Name: <%= @user.id if @user.id %></p>
 <p>Email: <%= @user.email if @user.email %></p>

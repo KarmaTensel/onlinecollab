@@ -12,9 +12,15 @@
           <strong><%= link_to "Blogs", posts_path, class:"navbar-brand" %></strong>
         </li>
 
-        <li class="nav-item">
-          <strong><%= link_to "Users", users_path, class:"navbar-brand" %></strong>
-        </li>
+        <% if user_signed_in? %>
+          <% if current_user.role == 'admin' %>
+
+            <li class="nav-item">
+              <strong><%= link_to "Users", users_path, class:"navbar-brand" %></strong>
+            </li>
+
+          <% end %>
+        <% end %>
 
         <li class="nav-item">
           <strong><%= link_to "Guide & Instructions", root_path, class:"navbar-brand" %></strong>

@@ -5,34 +5,36 @@
 
 <hr class="hr">
 
+<p> Pulished posts: <strong><%= Post.published_count %> </strong> </p><br>
+
 <% @posts.each do |post| %>
 
-  <div class="jumbotron">
-    <p class="mb-3"><strong>Title: </strong><%= post.title %> ~ <b>@</b><%= post.user.email %></p>
+  <% if post.status == 'Publish' %>
 
-    <p>
-      <strong>Relevance: </strong><%= post.tags %>
-    </p>
+    <div class="jumbotron">
+      <p class="mb-3"><strong>Title: </strong><%= post.title %> ~ <b>@</b><%= post.user.email %></p>
 
-    <p>
-      <strong>Posted on: </strong><%= post.created_at.strftime("%A, %B %e, %Y") %>, at <%= post.created_at.strftime("%I:%M %P") %> <br>
-      <!-- <strong>Updated at: </strong><%= post.updated_at.strftime("%I:%M %P") %>, <%= post.created_at.strftime("%D")%> -->
-    </p>
+      <p> <strong>Relevance: </strong><%= post.tags %> </p>
 
-    <p class="lead">
+      <p> <strong>Posted on: </strong><%= post.created_at.strftime("%A, %B %e, %Y") %>, at <%= post.created_at.strftime("%I:%M %P") %> <br>
+      </p>
 
-      <%= link_to 'Read', post, class:"btn btn-primary"%>
-      
-      <% if current_user || !!@user.admin %>
-        <%= link_to 'Edit', edit_post_path(post), class:"btn btn-primary"%>
-        <%= link_to 'Destroy', post, method: :delete, data: { confirm: 'Are you sure?' }, class:"btn btn-danger"%>
-      <% end %>
+      <p class="lead">
 
-    </p>
+        <%= link_to 'Read', post, class:"btn btn-primary"%>
+        
+        <% if post.user_id == current_user.id || current_user.admin? %>
+          <%= link_to 'Edit', edit_post_path(post), class:"btn btn-primary"%>
+          <%= link_to 'Destroy', post, method: :delete, data: { confirm: 'Are you sure?' }, class:"btn btn-danger"%>
+        <% end %>
 
-  </div>
+      </p>
 
-  <hr class="bg-dark border-1 border-top border-dark">
+    </div>
+
+    <hr class="bg-dark border-1 border-top border-dark">
+  
+  <% end %>
 
 <% end %>
 

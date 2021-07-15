@@ -23,18 +23,19 @@
   <%= @post.created_at.strftime("%A, %B %e, %Y")%> at <%= @post.created_at.strftime("%I:%M %P") %>
 </p>
 
-<% if current_user %>
+<% if @post.user_id == current_user.id || current_user.role == 'admin' || current_user.role == 'moderator' %>
   <%= link_to 'Edit', edit_post_path(@post), class:"btn btn-primary" %> |
 <% end %>
 
-<%= link_to 'Back', posts_path, class:"btn btn-primary" %>
+<%= link_to 'Back to posts', posts_path, class:"btn btn-primary" %>
 
 <hr class="bg-dark border-1 border-top border-success">
 <br>
 
 <h4>
-  <%= ActionController::Base.helpers.pluralize(@post.comments.count, "Comment") %>
+  <%= pluralize(@post.comments.count, "Comment") %>
 </h4>
+<br>
 
 <div class="container">
 <% @post.comments.reverse.each do |comment| %>
@@ -77,7 +78,7 @@
 <br/>
 
 <h4>
-  <%= ActionController::Base.helpers.pluralize(@post.answers.count, "Answer") %>
+  <%= pluralize(@post.answers.count, "Answer") %>
 </h4> 
 
 <div class="container">

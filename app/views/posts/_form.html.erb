@@ -26,6 +26,11 @@
     <%= form.text_field :tags, class:"form-control", placeholder:"eg., networking, linux, rails-framework, python, etc."%>
   </div>
 
+  <div class="field mb-3">
+    <%= form.label :status %><br>
+    <%= form.select :status, ['Publish', 'Draft', 'Archive'], selected: 'Publish' %>
+  </div>
+
   <div class="actions">
     <%= form.submit class:"btn btn-success"%>
   </div>

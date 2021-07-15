@@ -3,8 +3,6 @@ class PostsController < ApplicationController
   skip_before_action :authenticate_user!, :only => [:index]
   before_action :correct_user, only: [:edit, :update, :destroy]
 
-
-
   def index
     @posts = Post.all.reverse
     # @posts = Post.all.with_rich_text_content_and_embeds.reverse
@@ -78,6 +76,6 @@ class PostsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def post_params
-      params.require(:post).permit(:title, :tags, :content)
+      params.require(:post).permit(:title, :tags, :content, :status)
     end
 end

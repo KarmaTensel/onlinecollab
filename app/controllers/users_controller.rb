@@ -10,6 +10,7 @@ class UsersController < ApplicationController
     def show
       @user = User.find(params[:id])
       authorize @user
+      @post = Post.find(params[:id])
     end
   
     def update
@@ -30,8 +31,10 @@ class UsersController < ApplicationController
       end
     end
   
-    def secure_params
-        params.require(:user).permit(:role)
-    end
+    private
+
+      def secure_params
+          params.require(:user).permit(:role)
+      end
   
   end
