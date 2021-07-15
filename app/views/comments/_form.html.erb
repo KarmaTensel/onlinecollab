@@ -1,5 +1,5 @@
 <div id="comment-form">
-    <%= form_for @comment do |f| %>
+    <%= form_with(model: comment) do |f| %>
         <h3><%= f.label :Add_Comment %></h3>
         <hr>
         <%= f.label :body, class: "form-label" %>

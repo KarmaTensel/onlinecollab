@@ -1,6 +1,6 @@
 class PostsController < ApplicationController
   before_action :set_post, only: %i[ show edit update destroy ]
-  before_action :authenticate_user!, excpet: [:show, :index]
+  skip_before_action :authenticate_user!, :only => [:index]
   before_action :correct_user, only: [:edit, :update, :destroy]
   # include ActionText::Attachable
 

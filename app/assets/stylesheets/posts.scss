@@ -25,3 +25,13 @@
 .separator:not(:empty)::before{
     margin-right: .25em;
 }
+
+.delete{ 
+    margin-left: 5px;
+    text-decoration: none;
+    color: rgb(248, 69, 50);
+}
+
+.bottom-corner{
+    margin-left: 90%;
+}

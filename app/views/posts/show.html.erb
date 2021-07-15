@@ -30,29 +30,91 @@
 <%= link_to 'Back', posts_path, class:"btn btn-primary" %>
 
 <hr class="bg-dark border-1 border-top border-success">
+<br>
 
-<h2><%= @post.comments.count %> comments</h2>
+<h4>
+  <%= ActionController::Base.helpers.pluralize(@post.comments.count, "Comment") %>
+</h4>
 
 <div class="container">
 <% @post.comments.reverse.each do |comment| %>
   <hr>
-  <div class="container">
+
+  <div class="container"> 
     <%= comment.body %> ~ <b>@</b><%= comment.user.email.split('@')[0] %>
     <%= comment.created_at.strftime("%B %e, %Y") %> at <%= comment.created_at.strftime("%I:%M %P") %>
+
+    <br>
+    
+    <% if current_user.id == comment.user_id %>
+      <%= link_to 'Edit', edit_post_comment_path(comment) %>
+      <%= link_to 'Delete', [comment.post, comment], method: :delete, class: "delete", data: { confirm: "Are you sure?" } %>
+    <% end %>
   </div>
-  <hr>
+
+  <hr> 
+
 <% end %>
 </div>
 
-<hr>
+<div class="container">
+  <h5>Add a comment<h5>
+  <%= form_with model: [ @post, @post.comments.build ] do |form| %>  
+    <div class="container">
+      <div>
+        <%= form.text_area :body%>
+      </div>
 
-<h3> Add a comment </h3>
-<%= form_with model: [ @post, @post.comments.build ] do |form| %>
+      <div>
+        <%= form.submit class: "btn btn-success"%>
+      </div>
+
+    </div>
+  <% end %>
+</div>
+
+<hr>
+<br/>
+
+<h4>
+  <%= ActionController::Base.helpers.pluralize(@post.answers.count, "Answer") %>
+</h4> 
+
+<div class="container">
+  <% @post.answers.reverse.each do |answer| %>
+    <br>
+    <div class="card">
+      <div class="container">
+        <%= answer.content %>
+        <hr>
+        ~ <b>@</b><%= User.find_by(:id => answer.post.user_id).email %>
+        <%= answer.created_at.strftime("%B %e, %Y") %> at <%= answer.created_at.strftime("%I:%M %P") %>
+
+          <div class="bottom-corner">
+            <% if current_user.id == answer.user_id %>
+              <%= link_to 'Edit', edit_post_answer_path(answer) %>
+              <%= link_to 'Delete', [answer.post, answer], method: :delete, class: "delete", data: { confirm: "Are you sure?" } %>
+            <% end %>
+          </div>
+      </div>
+    </div>
+
+    <br>
+
+
+  <% end %>
+
+</div>
+
+<br>
+
+<h4>Your answer</h4>
+<%= form_with model: [ @post, @post.answers.build ] do |form| %>
   <p>
-    <% form.label :body %><br>
-    <%= form.rich_text_area :body %>
+    <% form.label :content %><br>
+    <%= form.rich_text_area :content %>
   </p>
   <p>
-    <%= form.submit class: "btn btn-success"%>
+    <%= form.submit class: "btn btn-primary"%>
   </p>
 <% end %>
