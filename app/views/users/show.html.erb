@@ -20,10 +20,9 @@
       <% end %>
 
       <br>
-      <% if @post.user_id == current_user.id && @post.status == 'Archive' %>
-        <h4>Draft</h4>
-        <strong><%= Post.draft_count %> </strong> draft post.<br><br>
-      <% end %>
+      <br>
+
+      <p> You have <strong><%= pluralize(Post.draft_count, 'post')%></strong> in your draft. </p>
 
     </div>
 

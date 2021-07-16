@@ -6,5 +6,5 @@ class Post < ApplicationRecord
 
 	belongs_to :user
 
-	validates :title, :tags, :content, :user_id, presence: true
+	validates :title, :tags, :content, :status, :visibility, :user_id, presence: true
 end

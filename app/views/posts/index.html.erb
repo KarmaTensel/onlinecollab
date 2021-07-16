@@ -9,7 +9,7 @@
 
 <% @posts.each do |post| %>
 
-  <% if post.status == 'Publish' %>
+  <% if post.status == 'Publish' || post.user_id == current_user.id %>
 
     <div class="jumbotron">
       <p class="mb-3"><strong>Title: </strong><%= post.title %> ~ <b>@</b><%= post.user.email %></p>
@@ -18,6 +18,14 @@
 
       <p> <strong>Posted on: </strong><%= post.created_at.strftime("%A, %B %e, %Y") %>, at <%= post.created_at.strftime("%I:%M %P") %> <br>
       </p>
+
+      <% if post.status == 'Draft' %>
+        <p id="draft-post"> This post is under Archive. </p>
+      <% elsif post.status == 'Archive'%>
+        <% if !!current_user || current_user.role == 'Moderator' %>
+          <p id="archive-post"> This post is under Draft. </p>
+        <% end %>
+      <% end %>
 
       <p class="lead">
 

@@ -23,11 +23,21 @@
   <%= @post.created_at.strftime("%A, %B %e, %Y")%> at <%= @post.created_at.strftime("%I:%M %P") %>
 </p>
 
-<% if @post.user_id == current_user.id || current_user.role == 'admin' || current_user.role == 'moderator' %>
-  <%= link_to 'Edit', edit_post_path(@post), class:"btn btn-primary" %> |
-<% end %>
+<div class="d-flex">
+  <% if @post.user_id == current_user.id || current_user.role == 'admin' || current_user.role == 'moderator' %>
+    <div>
+      <%= link_to 'Edit', edit_post_path(@post), class:"btn btn-primary" %>
+    </div>
 
-<%= link_to 'Back to posts', posts_path, class:"btn btn-primary" %>
+    <div id="right-div">
+      <%= link_to 'Destroy', @post, method: :delete, data: { confirm: 'Are you sure?' }, class:"btn btn-danger"%>
+    </div>
+   <% end %>
+
+  <div id="right-div">
+    <%= link_to 'Back to posts', posts_path, class:"btn btn-primary" %>
+  </div>
+</div>
 
 <hr class="bg-dark border-1 border-top border-success">
 <br>
