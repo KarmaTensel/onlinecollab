@@ -1,9 +1,31 @@
-<h3>User</h3>
-<br>
+<div class="container-fluid py-5 px-5">
+  <div class="row">
 
-<% if @post.user_id == current_user.id && @post.status == 'Archive' %>
-  <h4>Draft</h4>
-  <strong><%= Post.draft_count %> </strong> draft post.<br><br>
-<% end %>
-<p>Name: <%= @user.id if @user.id %></p>
-<p>Email: <%= @user.email if @user.email %></p>
+    <div class="col-4">
+      <div class="profile-picture no-profile-picture"></div>
+    </div>
+
+    <div class="col-8">
+    
+      <h1><%= @user.email %></h1>
+      <h2>Bio</h2>
+      <% unless current_user.user? %>
+        <p><strong>Role: </strong><%= @user.role %></p>
+      <% end %>
+
+      <br>
+
+      <% if current_user.id == @user.id %>
+        <%= link_to 'Edit My profile', edit_user_path, method: :edit, class:"btn btn-primary" %>
+      <% end %>
+
+      <br>
+      <% if @post.user_id == current_user.id && @post.status == 'Archive' %>
+        <h4>Draft</h4>
+        <strong><%= Post.draft_count %> </strong> draft post.<br><br>
+      <% end %>
+
+    </div>
+
+  </div>
+</div>

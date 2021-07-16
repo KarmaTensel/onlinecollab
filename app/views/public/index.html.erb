@@ -1,6 +1,10 @@
 <h1>AskAway an Online Collaboration Platform</h1><br>
 
-<%= link_to 'Blogs', posts_path, class:"btn btn-primary" %><br><br>
+<% if user_signed_in? %>
+	<%= link_to "Go to Blogs", posts_path, class:"btn btn-primary" %><br><br>
+<% else %>
+	<%= link_to "Go to Blogs", new_user_registration_path, class:"btn btn-primary" %><br><br>
+<% end %>
 
 <% if user_signed_in? %>
 

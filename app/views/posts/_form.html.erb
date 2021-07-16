@@ -26,9 +26,16 @@
     <%= form.text_field :tags, class:"form-control", placeholder:"eg., networking, linux, rails-framework, python, etc."%>
   </div>
 
-  <div class="field mb-3">
-    <%= form.label :status %><br>
-    <%= form.select :status, ['Publish', 'Draft', 'Archive'], selected: 'Publish' %>
+  <div class="d-flex">
+    <div>
+      <%= form.label :status %><br>
+      <%= form.select :status, ['Publish', 'Draft', 'Archive'], selected: 'Publish' %>
+    </div>
+
+    <div id="right-div">
+      <%= form.label :visibility %><br>
+      <%= form.select :visibility, ['All', 'Co-workers', 'Employee', 'Admin'], selected: 'All' %>
+    </div>
   </div>
 
   <div class="actions">
