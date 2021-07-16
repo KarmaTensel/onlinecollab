@@ -20,7 +20,7 @@
       </p>
 
       <% if post.status == 'Draft' %>
-        <p id="draft-post"> This post is under Archive. </p>
+        <p id="draft-post"> This post is under Archived. </p>
       <% elsif post.status == 'Archive'%>
         <% if !!current_user || current_user.role == 'Moderator' %>
           <p id="archive-post"> This post is under Draft. </p>
@@ -39,6 +39,10 @@
       </p>
 
     </div>
+
+    Visibility: <%= post.visibility %><br>
+    Role: <%= post.user.role %><br>
+    Status: <%= post.status %>
 
     <hr class="bg-dark border-1 border-top border-dark">
   

@@ -2,15 +2,25 @@
   <div class="row">
 
     <div class="col-4">
-      <div class="profile-picture no-profile-picture"></div>
+      <div class="profile-picture no-profile-picture">
+        <img src="" width="250px" height="250px">
+      </div>
+      <br>
+      <div>
+        <h2>Bio</h2>
+        <p class="info">
+          <%= @user.bio %>
+        </p>
+      </div>
     </div>
 
     <div class="col-8">
     
-      <h1><%= @user.email %></h1>
-      <h2>Bio</h2>
+      <h1 class="info"><%= @user.username %></h1>
+
+      <br>
       <% unless current_user.user? %>
-        <p><strong>Role: </strong><%= @user.role %></p>
+        <p><strong>Role: </strong><%= @user.role %> at <b><%= @user.company %></b></p>
       <% end %>
 
       <br>
@@ -24,7 +34,13 @@
 
       <p> You have <strong><%= pluralize(Post.draft_count, 'post')%></strong> in your draft. </p>
 
+      <%# unless !@user.designation.nil? || !@user.company.nil? %>
+        <p>
+          Your LOGIC seems incomplete. <%= link_to 'Complete my profile.', edit_user_path, method: :edit %>
+        </p>
+
     </div>
 
   </div>
+    
 </div>

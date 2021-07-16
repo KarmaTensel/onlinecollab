@@ -9,7 +9,7 @@ module Status
 
   class_methods do
     def published_count
-      where(status: 'Publish').count
+      where(status: 'Publish', visibility:'All').count
     end
 
     def draft_count

@@ -7,10 +7,12 @@ class User < ApplicationRecord
     self.role ||= :user
   end
 
+  scope :same_company, -> { where(company: current_user.company) }
+
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
-          has_many :posts, dependent: :destroy
-          has_many :comments, dependent: :destroy
-          validates_associated :posts
+        has_many :posts, dependent: :destroy
+        has_many :comments, dependent: :destroy
+        validates_associated :posts
 end

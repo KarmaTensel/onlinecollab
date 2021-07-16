@@ -4,9 +4,12 @@ class PostsController < ApplicationController
   before_action :correct_user, only: [:edit, :update, :destroy]
 
   def index
-    @posts = Post.all.reverse
+    @posts = Post.all.order('created_at DESC')
+    @admin_posts = Post.post_admin.order('created_at DESC')
+    @coworker_posts = Post.post_cowoker.order('created_at DESC')
+    @employee_posts = Post.post_employee.order('created_at DESC')
+    @all_posts = Post.post_all.order('created_at DESC')
     # @posts = Post.all.with_rich_text_content_and_embeds.reverse
-
   end
 
   # GET /posts/1 or /posts/1.json
