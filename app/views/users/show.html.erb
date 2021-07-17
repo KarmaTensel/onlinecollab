@@ -19,8 +19,10 @@
       <h1 class="info"><%= @user.username %></h1>
 
       <br>
-      <% unless current_user.user? %>
+      <% if current_user.user? %>
         <p><strong>Role: </strong><%= @user.role %> at <b><%= @user.company %></b></p>
+      <% else %>
+        <p><strong>Role: </strong><%= @user.role %></p>
       <% end %>
 
       <br>

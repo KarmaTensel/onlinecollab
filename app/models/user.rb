@@ -2,10 +2,20 @@ class User < ApplicationRecord
 
   enum role: [:user, :employee, :moderator, :admin]
   after_initialize :set_default_role, :if => :new_record?
+  after_initialize :create_user
+
 
   def set_default_role
     self.role ||= :user
   end
+
+	def create_user
+    self.username ||= "user_#{rand(36**8).to_s(36)}" if self.new_record?
+    self.company ||= "?" if self.new_record?
+ 
+    # guaranteed maximum length: 8
+    # It generates random strings of lowercase a-z and 0-9. It's not very customizable but it's short and clean.
+	end
 
   scope :same_company, -> { where(company: current_user.company) }
 
