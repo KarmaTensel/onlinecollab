@@ -6,6 +6,8 @@ Rails.application.routes.draw do
   
   devise_for :users
   root 'public#index'
-  resources :users
+  resources :users do
+    get :edit, :on => :member
+  end
 
 end

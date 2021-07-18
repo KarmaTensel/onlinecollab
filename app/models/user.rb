@@ -1,15 +1,9 @@
 class User < ApplicationRecord
 
   enum role: [:user, :employee, :moderator, :admin]
-  after_initialize :set_default_role, :if => :new_record?
-  after_initialize :create_user
 
-
-  def set_default_role
-    self.role ||= :user
-  end
-
-	def create_user
+  after_initialize do
+    self.role ||= :user if self.new_record?
     self.username ||= "user_#{rand(36**8).to_s(36)}" if self.new_record?
     self.company ||= "?" if self.new_record?
  

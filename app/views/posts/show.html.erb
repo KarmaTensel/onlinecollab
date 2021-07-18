@@ -1,5 +1,5 @@
 <p>
-  <strong>Title:</strong>
+  <strong>Title:</strong> 
   <%= @post.title %>
 </p>
 
@@ -35,9 +35,23 @@
    <% end %>
 
   <div id="right-div">
-    <%= link_to 'Back to posts', posts_path, class:"btn btn-primary" %>
+    <%= link_to 'Back to Posts', posts_path, class:"btn btn-primary" %>
   </div>
+
 </div>
+
+
+<% unless @post.user_id == current_user.id %>
+  <div class=d-flex>
+    <div id="right-div">
+      <%= link_to 'Up vote', class:"btn btn-success" %>
+    </div>
+
+    <div id="right-div">
+       <%= link_to 'Down vote', class:"btn btn-danger" %>
+    </div>
+  </div>
+<% end %> 
 
 <hr class="bg-dark border-1 border-top border-success">
 <br>
@@ -120,12 +134,37 @@
 <br>
 
 <h4>Your answer</h4>
-<%= form_with model: [ @post, @post.answers.build ] do |form| %>
-  <p>
-    <% form.label :content %><br>
-    <%= form.rich_text_area :content %>
-  </p>
-  <p>
-    <%= form.submit class: "btn btn-primary"%>
-  </p>
+
+<% if @post.user_id == current_user.id %>
+
+  <% if Time.now - @post.created_at >= 1.day %>
+
+    <%= form_with model: [ @post, @post.answers.build ] do |form| %>
+      <p>
+        <% form.label :content %><br>
+        <%= form.rich_text_area :content %>
+      </p>
+      <p>
+        <%= form.submit class: "btn btn-primary"%>
+      </p>
+    <% end %>
+
+  <% else %>
+
+      <p> Users can answer their own questions only after <b>24 hours.</b> </p>
+  
+  <%end%>
+
+<% else %>
+
+  <%= form_with model: [ @post, @post.answers.build ] do |form| %>
+    <p>
+      <% form.label :content %><br>
+      <%= form.rich_text_area :content %>
+    </p>
+    <p>
+      <%= form.submit class: "btn btn-primary"%>
+    </p>
+  <% end %>
+
 <% end %>

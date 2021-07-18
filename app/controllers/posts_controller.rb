@@ -9,6 +9,7 @@ class PostsController < ApplicationController
     @coworker_posts = Post.post_cowoker.order('created_at DESC')
     @employee_posts = Post.post_employee.order('created_at DESC')
     @all_posts = Post.post_all.order('created_at DESC')
+
     # @posts = Post.all.with_rich_text_content_and_embeds.reverse
   end
 
