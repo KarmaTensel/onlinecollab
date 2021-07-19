@@ -20,7 +20,7 @@ class UsersController < ApplicationController
       if @user.update(secure_params)
         redirect_to users_path, :notice => "User updated."
       else
-        redirect_to users_path, :alert => "Unable to update user."
+        render 'edit'
       end
     end
   
@@ -34,7 +34,7 @@ class UsersController < ApplicationController
     private
 
       def secure_params
-          params.require(:user).permit(:role)
+          params.require(:user).permit(:role, :designation, :company, :bio, :username)
       end
 
       def set_user

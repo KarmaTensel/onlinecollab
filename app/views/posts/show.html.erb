@@ -84,18 +84,9 @@
 
 <div class="container">
   <h5>Add a comment<h5>
-  <%= form_with model: [ @post, @post.comments.build ] do |form| %>  
-    <div class="container">
-      <div>
-        <%= form.text_area :body%>
-      </div>
 
-      <div>
-        <%= form.submit class: "btn btn-success"%>
-      </div>
-
-    </div>
-  <% end %>
+  <%= render 'comments/form' %>
+  
 </div>
 
 <hr>
@@ -120,13 +111,15 @@
               <%= link_to 'Edit', edit_post_answer_path(answer) %>
               <%= link_to 'Delete', [answer.post, answer], method: :delete, class: "delete", data: { confirm: "Are you sure?" } %>
             <% end %>
+            
+            <% if @post.user_id == current_user.id%>+
+              <%= link_to accept_answer(@post), accept_answer_post_path(@post), :remote => true, :id => "approve_link_#{@post.id}" %>
+            <% end %> 
           </div>
       </div>
     </div>
 
     <br>
-
-
   <% end %>
 
 </div>
@@ -139,15 +132,7 @@
 
   <% if Time.now - @post.created_at >= 1.day %>
 
-    <%= form_with model: [ @post, @post.answers.build ] do |form| %>
-      <p>
-        <% form.label :content %><br>
-        <%= form.rich_text_area :content %>
-      </p>
-      <p>
-        <%= form.submit class: "btn btn-primary"%>
-      </p>
-    <% end %>
+    <%= render 'answers/form' %>
 
   <% else %>
 
@@ -157,14 +142,6 @@
 
 <% else %>
 
-  <%= form_with model: [ @post, @post.answers.build ] do |form| %>
-    <p>
-      <% form.label :content %><br>
-      <%= form.rich_text_area :content %>
-    </p>
-    <p>
-      <%= form.submit class: "btn btn-primary"%>
-    </p>
-  <% end %>
+  <%= render 'answers/form' %>
 
 <% end %>

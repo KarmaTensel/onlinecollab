@@ -1,0 +1,9 @@
+    <%= form_with model: [ @post, @post.answers.build ] do |form| %>
+      <p>
+        <% form.label :content %><br>
+        <%= form.rich_text_area :content %>
+      </p>
+      <p>
+        <%= form.submit class: "btn btn-primary"%>
+      </p>
+    <% end %>

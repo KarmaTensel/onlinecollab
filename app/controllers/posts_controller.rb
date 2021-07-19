@@ -1,5 +1,5 @@
 class PostsController < ApplicationController
-  before_action :set_post, only: %i[ show edit update destroy ]
+  before_action :set_post, only: %i[ show edit update destroy accept_answer]
   skip_before_action :authenticate_user!, :only => [:index]
   before_action :correct_user, only: [:edit, :update, :destroy]
 
@@ -55,6 +55,20 @@ class PostsController < ApplicationController
         format.json { render json: @post.errors, status: :unprocessable_entity }
       end
     end
+
+    # if @post.update(ans_params)
+    #   flash[:notice] = "Answer accepted!"
+    #   redirect_to posts_path(post)
+    # else
+    #   flash[:notice] = "Error accepting answer. Please try agian."
+    #   render "/post"
+    # end
+
+  end
+
+  def accept_answer
+    @post.toggle!(:accepted_answer_id)
+    render :nothing => true
   end
 
   # DELETE /posts/1 or /posts/1.json
@@ -81,5 +95,9 @@ class PostsController < ApplicationController
     # Only allow a list of trusted parameters through.
     def post_params
       params.require(:post).permit(:title, :tags, :content, :status, :visibility)
+    end
+
+    def ans_params
+      params.require(:post).permit(:accepted_answer_id)
     end
 end
