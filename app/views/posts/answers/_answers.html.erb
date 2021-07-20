@@ -1,0 +1,24 @@
+<% @post.answers.reverse.each do |answer| %>
+  <br>
+  <div class="card">
+    <div class="container">
+      <%= answer.content %>
+      <hr>
+      ~ <b>@</b><%= User.find_by(:id => answer.user_id).email %>
+      <%= answer.created_at.strftime("%B %e, %Y") %> at <%= answer.created_at.strftime("%I:%M %P") %>
+
+        <div class="bottom-corner">
+          <% if current_user.id == answer.user_id %>
+            <%# <%= link_to 'Edit', edit_post_answer_path(answer.id) %>
+            <%= link_to 'Delete', post_answer_path(answer), method: :delete, class: "delete", data: { confirm: "Are you sure?" } %>
+          <% end %>
+            
+          <% if @post.user_id == current_user.id%>
+            <%= link_to 'Accept', answer, class: "btn btn-success", data: { confirm: 'Accept answer?' } %>
+          <% end %> 
+        </div>
+    </div>
+  </div>
+
+  <br>
+<% end %>

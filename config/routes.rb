@@ -1,18 +1,13 @@
 Rails.application.routes.draw do
+
+  root 'public#index'
+
   resources :posts do
-    resources :comments   #nested routes
-    resources :answers
-    get 'accept_answer', :on => :member
+    resources :comments
+    resources :answers, controller: 'posts/answers'
   end
   
   devise_for :users
-  devise_scope :user do
-    patch 'update', to: 'registrations#update', as: 'edit_user_path'
-  end
-
-  root 'public#index'
-  resources :users do
-    put :edit, :on => :member
-  end
-
+  resources :users
+  
 end

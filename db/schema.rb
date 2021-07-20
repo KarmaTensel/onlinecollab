@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_07_19_100501) do
+ActiveRecord::Schema.define(version: 2021_07_20_143032) do
 
   create_table "action_text_rich_texts", force: :cascade do |t|
     t.string "name", null: false
@@ -68,6 +68,16 @@ ActiveRecord::Schema.define(version: 2021_07_19_100501) do
     t.index ["user_id"], name: "index_comments_on_user_id"
   end
 
+  create_table "crono_jobs", force: :cascade do |t|
+    t.string "job_id", null: false
+    t.text "log", limit: 1073741823
+    t.datetime "last_performed_at"
+    t.boolean "healthy"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["job_id"], name: "index_crono_jobs_on_job_id", unique: true
+  end
+
   create_table "posts", force: :cascade do |t|
     t.string "title"
     t.string "tags"
@@ -77,6 +87,8 @@ ActiveRecord::Schema.define(version: 2021_07_19_100501) do
     t.string "status"
     t.string "visibility"
     t.integer "accepted_answer_id"
+    t.datetime "published_at"
+    t.datetime "publish_at"
     t.index ["user_id"], name: "index_posts_on_user_id"
   end
 
@@ -93,6 +105,7 @@ ActiveRecord::Schema.define(version: 2021_07_19_100501) do
     t.string "company"
     t.text "bio"
     t.string "username"
+    t.binary "avatar"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
     t.index ["username"], name: "index_users_on_username", unique: true

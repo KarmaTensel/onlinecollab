@@ -38,6 +38,18 @@
     </div>
   </div>
 
+  <br>
+  <hr>
+
+  <div class="field mb-3">
+    <b>Schedule your post here so it could be published later on. </p><br>
+    <%= form.label :Publish_post_at, class: "form-label" %>
+    <%= form.datetime_select :publish_at, { start_day: Date.today, start_year: Date.today.year, minute_step: 1 }, { class: "select py-2 px-2 mr-2" } %>
+  </div>
+
+  <hr>
+  <br>
+
   <div class="actions">
     <%= form.submit class:"btn btn-success"%>
   </div>

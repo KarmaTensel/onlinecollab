@@ -1,7 +1,7 @@
 module Status
   extend ActiveSupport::Concern
 
-  VALID_STATUSES = ['Draft', 'Archive', 'Publish']
+  VALID_STATUSES = ['Draft', 'Archive', 'Publish', 'not_published']
 
   included do
     validates :status, inclusion: { in: VALID_STATUSES }

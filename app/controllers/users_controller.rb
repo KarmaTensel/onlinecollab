@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
     before_action :authenticate_user!
     after_action :verify_authorized
-    before_action :set_user, only: %i[ show edit update destroy ]
+    before_action :set_user, only: %i[ show update destroy ]
   
     def index
       @users = User.all
@@ -13,6 +13,10 @@ class UsersController < ApplicationController
     end
 
     def edit
+      user = User.find_by(id: params[:id])
+      if current_user == user
+        user.update()
+      end
     end
   
     def update
@@ -34,7 +38,7 @@ class UsersController < ApplicationController
     private
 
       def secure_params
-          params.require(:user).permit(:role, :designation, :company, :bio, :username)
+          params.require(:user).permit(:role, :designation, :company, :bio, :username, :avatar)
       end
 
       def set_user

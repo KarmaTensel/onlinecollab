@@ -1,16 +1,15 @@
 class PostsController < ApplicationController
-  before_action :set_post, only: %i[ show edit update destroy accept_answer]
+  before_action :set_post, only: %i[ show edit update destroy]
   skip_before_action :authenticate_user!, :only => [:index]
   before_action :correct_user, only: [:edit, :update, :destroy]
 
   def index
     @posts = Post.all.order('created_at DESC')
-    @admin_posts = Post.post_admin.order('created_at DESC')
-    @coworker_posts = Post.post_cowoker.order('created_at DESC')
-    @employee_posts = Post.post_employee.order('created_at DESC')
-    @all_posts = Post.post_all.order('created_at DESC')
 
-    # @posts = Post.all.with_rich_text_content_and_embeds.reverse
+    # @admin_posts = Post.post_admin.order('created_at DESC')
+    # @coworker_posts = Post.post_cowoker.order('created_at DESC')
+    # @employee_posts = Post.post_employee.order('created_at DESC')
+    # @all_posts = Post.post_all.order('created_at DESC')
   end
 
   # GET /posts/1 or /posts/1.json
@@ -31,8 +30,6 @@ class PostsController < ApplicationController
     @post = current_user.posts.new(post_params)
     @post.user_id = current_user.id
 
-    # every post is associated to the user currently logged in
-
     respond_to do |format|
       if @post.save
         format.html { redirect_to @post, notice: "Post was successfully created." }
@@ -44,7 +41,6 @@ class PostsController < ApplicationController
     end
   end
 
-  # PATCH/PUT /posts/1 or /posts/1.json
   def update
     respond_to do |format|
       if @post.update(post_params)
@@ -66,12 +62,6 @@ class PostsController < ApplicationController
 
   end
 
-  def accept_answer
-    @post.toggle!(:accepted_answer_id)
-    render :nothing => true
-  end
-
-  # DELETE /posts/1 or /posts/1.json
   def destroy
     @post.destroy
     respond_to do |format|
@@ -86,18 +76,18 @@ class PostsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
+
     def set_post
       @post = Post.find(params[:id])
       @user = @post.user.email
     end
 
-    # Only allow a list of trusted parameters through.
     def post_params
-      params.require(:post).permit(:title, :tags, :content, :status, :visibility)
+      params.require(:post).permit(:title, :tags, :content, :status, :visibility, :publish_at)
     end
 
-    def ans_params
-      params.require(:post).permit(:accepted_answer_id)
-    end
+    # def ans_params
+    #   params.require(:post).permit(:accepted_answer_id)
+    # end
+    
 end

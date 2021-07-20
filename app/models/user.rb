@@ -1,5 +1,7 @@
 class User < ApplicationRecord
 
+  # has_one_attached :avatar
+
   enum role: [:user, :employee, :moderator, :admin]
 
   after_initialize do
@@ -19,4 +21,5 @@ class User < ApplicationRecord
         has_many :posts, dependent: :destroy
         has_many :comments, dependent: :destroy
         validates_associated :posts
+        has_many :post_votes, dependent: :destroy
 end

@@ -79,6 +79,9 @@ GEM
     childprocess (3.0.0)
     concurrent-ruby (1.1.9)
     crass (1.0.6)
+    crono (1.1.2)
+      activerecord (>= 4.0)
+      activesupport (>= 4.0)
     devise (4.8.0)
       bcrypt (~> 3.0)
       orm_adapter (~> 0.1)
@@ -237,6 +240,7 @@ DEPENDENCIES
   bootsnap (>= 1.4.4)
   byebug
   capybara (>= 3.26)
+  crono
   devise (~> 4.8)
   image_processing (~> 1.2)
   jbuilder (~> 2.7)

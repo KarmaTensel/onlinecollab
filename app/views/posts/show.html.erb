@@ -5,7 +5,9 @@
 
 <p>
   <strong>Details:</strong>
-  <%= @post.content %>
+  <div class="container">
+    <%= @post.content %>
+  </div>
 </p>
 
 <p>
@@ -22,6 +24,11 @@
   <strong>Posted at: </strong>
   <%= @post.created_at.strftime("%A, %B %e, %Y")%> at <%= @post.created_at.strftime("%I:%M %P") %>
 </p>
+
+<!-- <p>
+  <strong>Will be published on: </strong>
+  <%= @post.publish_at.strftime("%A, %B %e, %Y")%> at <%= @post.publish_at.strftime("%I:%M %P") %>
+</p> -->
 
 <div class="d-flex">
   <% if @post.user_id == current_user.id || current_user.role == 'admin' || current_user.role == 'moderator' %>
@@ -97,31 +104,7 @@
 </h4> 
 
 <div class="container">
-  <% @post.answers.reverse.each do |answer| %>
-    <br>
-    <div class="card">
-      <div class="container">
-        <%= answer.content %>
-        <hr>
-        ~ <b>@</b><%= User.find_by(:id => answer.post.user_id).email %>
-        <%= answer.created_at.strftime("%B %e, %Y") %> at <%= answer.created_at.strftime("%I:%M %P") %>
-
-          <div class="bottom-corner">
-            <% if current_user.id == answer.user_id %>
-              <%= link_to 'Edit', edit_post_answer_path(answer) %>
-              <%= link_to 'Delete', [answer.post, answer], method: :delete, class: "delete", data: { confirm: "Are you sure?" } %>
-            <% end %>
-            
-            <% if @post.user_id == current_user.id%>+
-              <%= link_to accept_answer(@post), accept_answer_post_path(@post), :remote => true, :id => "approve_link_#{@post.id}" %>
-            <% end %> 
-          </div>
-      </div>
-    </div>
-
-    <br>
-  <% end %>
-
+  <%= render 'posts/answers/answers' %>
 </div>
 
 <br>
@@ -132,7 +115,7 @@
 
   <% if Time.now - @post.created_at >= 1.day %>
 
-    <%= render 'answers/form' %>
+    <%= render 'posts/answers/form' %>
 
   <% else %>
 
@@ -142,6 +125,6 @@
 
 <% else %>
 
-  <%= render 'answers/form' %>
+  <%= render 'posts/answers/form' %>
 
 <% end %>
