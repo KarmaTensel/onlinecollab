@@ -14,7 +14,7 @@
           <% end %>
             
           <% if @post.user_id == current_user.id%>
-            <%= link_to 'Accept', answer, class: "btn btn-success", data: { confirm: 'Accept answer?' } %>
+            <%= link_to 'Accept', class: "btn btn-success", data: { confirm: 'Accept answer?' } %>
           <% end %> 
         </div>
     </div>

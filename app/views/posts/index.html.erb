@@ -1,15 +1,6 @@
-<form class="d-flex">
-  <input class="form-control me-2" type="search" placeholder="Search for Posts here..." aria-label="Search">
-  <button type="submit" class="btn btn-outline-primary">Search</button>
-</form>
-
-<hr class="hr">
-
-<p> Pulished posts: <strong><%= Post.published_count %> </strong> </p><br>
-
 <% @posts.each do |post| %>
 
-  <% if post.status == 'Publish' || post.user_id == current_user.id %>
+  <% unless post.published_at == 'nil' %>
 
     <div class="jumbotron">
       <p class="mb-3"><strong>Title: </strong><%= post.title %> ~ <b>@</b><%= post.user.email %></p>
@@ -39,10 +30,6 @@
       </p>
 
     </div>
-
-    Visibility: <%= post.visibility %><br>
-    Role: <%= post.user.role %><br>
-    Status: <%= post.status %>
 
     <hr class="bg-dark border-1 border-top border-dark">
   

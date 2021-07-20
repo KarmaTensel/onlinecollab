@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  get 'guide/index'
   root 'public#index'
 
   resources :posts do

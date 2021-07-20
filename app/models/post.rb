@@ -4,7 +4,6 @@ class Post < ApplicationRecord
 	has_rich_text :content
 	has_many :comments, dependent: :destroy
 	has_many :answers, dependent: :destroy
-	has_many :post_votes, dependent: :destroy
 
 	belongs_to :user
 
