@@ -26,11 +26,13 @@
 
       <p>Designation: <%= current_user.designation%></p>
 
-      <p>Company: <%= current_user.designation%></p>
+      <p>Company: <%= current_user.company%></p>
 
       <br>
       <hr >
       <p> You have <strong><%= pluralize(Post.draft_count, 'post')%></strong> in your draft. </p>
+
+      <%= link_to "Edit profile", edit_user_path, class:"btn btn-primary" %>
 
     </div>
 

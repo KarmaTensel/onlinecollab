@@ -7,6 +7,10 @@ Rails.application.routes.draw do
     resources :comments
     resources :answers, controller: 'posts/answers'
   end
+
+  devise_scope :user do
+    get "user/edit" => "devise/registrations#edit", as: "edit_user"
+  end
   
   devise_for :users
   resources :users

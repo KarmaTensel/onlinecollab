@@ -1,20 +1,28 @@
-<h1>AskAway an Online Collaboration Platform</h1><br>
+<div class="container">
+	<br>
+	<br>
 
-<% if user_signed_in? %>
-	<%= link_to "Go to Blogs", posts_path, class:"btn btn-primary" %><br><br>
-<% else %>
-	<%= link_to "Go to Blogs", new_user_registration_path, class:"btn btn-primary" %><br><br>
-<% end %>
+	<h1>AskAway an Online Collaboration Platform</h1><br>
 
-<% if user_signed_in? %>
+	<br>
+	<br>
 
-	<%= link_to 'Edit Profile', edit_user_registration_path, class:"btn btn-primary" %><br><br>
-	<%= link_to 'Ask a Question?', new_post_path, class:"btn btn-primary" %><br><br>
-	<%= link_to 'Sign Out', destroy_user_session_path, method: :delete, class:"btn btn-danger" %><br>
+	<% if user_signed_in? %>
+		<%= link_to "Go to Blogs", posts_path, class:"btn btn-primary" %><br><br>
+	<% else %>
+		<%= link_to "Go to Blogs", new_user_registration_path, class:"btn btn-primary" %><br><br>
+	<% end %>
 
-<% else %>
+	<% if user_signed_in? %>
 
-	<%= link_to 'Sign Up', new_user_registration_path, class:"btn btn-primary"%><br><br>	
-	<%= link_to 'Log In', new_user_session_path, class:"btn btn-primary" %><br>
+		<%= link_to 'Ask a Question?', new_post_path, class:"btn btn-primary" %><br><br>
+		<%= link_to 'Sign Out', destroy_user_session_path, method: :delete, class:"btn btn-danger" %><br>
 
-<% end %>	
+	<% else %>
+
+		<%= link_to 'Sign Up', new_user_registration_path, class:"btn btn-primary"%><br><br>	
+		<%= link_to 'Log In', new_user_session_path, class:"btn btn-primary" %><br>
+
+	<% end %>	
+
+</div>

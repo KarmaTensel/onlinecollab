@@ -3,6 +3,11 @@ class UsersController < ApplicationController
     after_action :verify_authorized
     before_action :set_user, only: %i[ show update destroy ]
   
+    def new
+      @users = User.new
+      authorize User
+    end
+
     def index
       @users = User.all
       authorize User
