@@ -2,32 +2,22 @@ class PostsController < ApplicationController
   before_action :set_post, only: %i[ show edit update destroy]
   skip_before_action :authenticate_user!, :only => [:index]
   before_action :true_user, only: [:edit, :update, :destroy]
-  after_action :verify_authorized
 
   def index
     @posts = Post.all.order('created_at DESC')
-    skip_authorization
-
-    # @admin_posts = Post.post_admin.order('created_at DESC')
-    # @coworker_posts = Post.post_cowoker.order('created_at DESC')
-    # @employee_posts = Post.post_employee.order('created_at DESC')
-    # @all_posts = Post.post_all.order('created_at DESC')
   end
 
   # GET /posts/1 or /posts/1.json
   def show
-    skip_authorization
   end
 
   # GET /posts/new
   def new
-    skip_authorization
     @post = Post.new
   end
 
   # GET /posts/1/edit
   def edit
-    authorize @post
   end
 
   # POST /posts or /posts.json
@@ -47,7 +37,6 @@ class PostsController < ApplicationController
   end
   
   def update
-    authorize @post
     respond_to do |format|
       if @post.update(post_params)
         format.html { redirect_to @post, notice: "Post was successfully updated." }
@@ -60,7 +49,6 @@ class PostsController < ApplicationController
   end
 
   def destroy
-    authorize @post
     respond_to do |format|
       if @post.destroy
         format.html { redirect_to posts_url, notice: "Post was successfully destroyed." }
@@ -84,9 +72,5 @@ class PostsController < ApplicationController
     def post_params
       params.require(:post).permit(:title, :tags, :content, :status, :visibility, :publish_at)
     end
-
-    # def ans_params
-    #   params.require(:post).permit(:accepted_answer_id)
-    # end
     
 end

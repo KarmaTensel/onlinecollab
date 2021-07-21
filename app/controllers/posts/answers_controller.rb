@@ -1,5 +1,4 @@
 class Posts::AnswersController < ApplicationController
-	after_action :verify_authorized
 	before_action :set_answer, only: %i[ create edit update destroy ]
 
 	def create
@@ -16,11 +15,9 @@ class Posts::AnswersController < ApplicationController
 	end
 
 	def edit
-		authorize @answerable
 	end
 	
 	def update
-		authorize @answerable
 
 		if @answer.update(answer_params)
 			redirect_to @post, notice: "Your answer has been updated!"
@@ -30,7 +27,6 @@ class Posts::AnswersController < ApplicationController
 	end
 
 	def destroy
-		authorize @answerable
 		@answer = @post.answers.find(params[:id])
 
 		if @answer.destroy

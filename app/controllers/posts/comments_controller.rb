@@ -1,5 +1,4 @@
 class Posts::CommentsController < ApplicationController
-	after_action :verify_authorized
 	before_action :set_comment, only: %i[ create edit update destroy ]
 
 	def create
@@ -15,11 +14,9 @@ class Posts::CommentsController < ApplicationController
 	end
 
 	def edit
-		authorize @commentable
 	end
 	
 	def update
-		authorize @commentable
 
 		if @comment.update(comment_params)
 			redirect_to @post, notice: "Your comment has been updated!"
@@ -29,7 +26,6 @@ class Posts::CommentsController < ApplicationController
 	end
 
 	def destroy
-		authorize @commentable
 
 		@comment = @post.comments.find(params[:id])
 		if @comment.destroy
