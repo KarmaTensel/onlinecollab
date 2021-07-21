@@ -1,5 +1,6 @@
+<br>
 <p>
-  <strong>Title:</strong> 
+  <strong >Title:</strong> 
   <%= @post.title %>
 </p>
 
@@ -63,43 +64,42 @@
 <hr class="bg-dark border-1 border-top border-success">
 <br>
 
-<h4>
+<div class="container">
+<h4 class="info">
   <%= pluralize(@post.comments.count, "Comment") %>
 </h4>
-<br>
-
-<div class="container">
 <% @post.comments.reverse.each do |comment| %>
   <hr>
 
   <div class="container"> 
-    <%= comment.body %> ~ <b>@</b><%= comment.user.email.split('@')[0] %>
+    <%= comment.body %> ~ <b class="info">@<%= comment.user.username %>.</b>
+    <b>Posted on</b>
     <%= comment.created_at.strftime("%B %e, %Y") %> at <%= comment.created_at.strftime("%I:%M %P") %>
 
     <br>
-    
+    <br>
     <% if current_user.id == comment.user_id %>
-      <%= link_to 'Edit', edit_post_comment_path(comment) %>
+      <%= link_to 'Edit', edit_post_comment_path(@post, comment), class:"bottom-corner" %>
       <%= link_to 'Delete', [comment.post, comment], method: :delete, class: "delete", data: { confirm: "Are you sure?" } %>
     <% end %>
   </div>
 
-  <hr> 
+  <hr>
 
 <% end %>
 </div>
 
 <div class="container">
-  <h5>Add a comment<h5>
+  <h5 class="info">Add a comment<h5>
 
-  <%= render 'comments/form' %>
+  <%= render 'posts/comments/form' %>
   
 </div>
 
 <hr>
 <br/>
 
-<h4>
+<h4 class="info">
   <%= pluralize(@post.answers.count, "Answer") %>
 </h4> 
 
@@ -109,7 +109,7 @@
 
 <br>
 
-<h4>Your answer</h4>
+<h4 class="info">Your answer</h4>
 
 <% if @post.user_id == current_user.id %>
 

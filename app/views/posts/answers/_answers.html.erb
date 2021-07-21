@@ -4,18 +4,20 @@
     <div class="container">
       <%= answer.content %>
       <hr>
-      ~ <b>@</b><%= User.find_by(:id => answer.user_id).email %>
+      ~ <b class="info">@<%= User.find_by(:id => answer.user_id).username %>.</b>
+      <b>Answered at</b>
       <%= answer.created_at.strftime("%B %e, %Y") %> at <%= answer.created_at.strftime("%I:%M %P") %>
-
         <div class="bottom-corner">
+        <br>
           <% if current_user.id == answer.user_id %>
-            <%# <%= link_to 'Edit', edit_post_answer_path(answer.id) %>
-            <%= link_to 'Delete', post_answer_path(answer), method: :delete, class: "delete", data: { confirm: "Are you sure?" } %>
+            <%= link_to 'Edit', edit_post_answer_path(@post, answer), class:"bottom-corner"%>
+            <%= link_to 'Delete',  [answer.post, answer], method: :delete, class: "delete", data: { confirm: "Are you sure?" } %>
           <% end %>
             
           <% if @post.user_id == current_user.id%>
             <%= link_to 'Accept', class: "btn btn-success", data: { confirm: 'Accept answer?' } %>
           <% end %> 
+          
         </div>
     </div>
   </div>

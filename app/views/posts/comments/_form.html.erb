@@ -1,5 +1,5 @@
 <%= form_with model: [ @post, @post.comments.build ] do |f| %>
-    <%= f.rich_text_area :body, class: "form-control", placeholder: "Say something" %>
+    <%= f.rich_text_area :body, class: "form-control", autocomplete: :body %>
     <br>
     <div class="actions">
         <%= f.submit class:"btn btn-success"%>

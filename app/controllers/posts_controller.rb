@@ -1,10 +1,12 @@
 class PostsController < ApplicationController
   before_action :set_post, only: %i[ show edit update destroy]
   skip_before_action :authenticate_user!, :only => [:index]
-  before_action :correct_user, only: [:edit, :update, :destroy]
+  before_action :true_user, only: [:edit, :update, :destroy]
+  after_action :verify_authorized
 
   def index
     @posts = Post.all.order('created_at DESC')
+    skip_authorization
 
     # @admin_posts = Post.post_admin.order('created_at DESC')
     # @coworker_posts = Post.post_cowoker.order('created_at DESC')
@@ -14,15 +16,18 @@ class PostsController < ApplicationController
 
   # GET /posts/1 or /posts/1.json
   def show
+    skip_authorization
   end
 
   # GET /posts/new
   def new
+    skip_authorization
     @post = Post.new
   end
 
   # GET /posts/1/edit
   def edit
+    authorize @post
   end
 
   # POST /posts or /posts.json
@@ -40,8 +45,9 @@ class PostsController < ApplicationController
       end
     end
   end
-
+  
   def update
+    authorize @post
     respond_to do |format|
       if @post.update(post_params)
         format.html { redirect_to @post, notice: "Post was successfully updated." }
@@ -51,26 +57,19 @@ class PostsController < ApplicationController
         format.json { render json: @post.errors, status: :unprocessable_entity }
       end
     end
-
-    # if @post.update(ans_params)
-    #   flash[:notice] = "Answer accepted!"
-    #   redirect_to posts_path(post)
-    # else
-    #   flash[:notice] = "Error accepting answer. Please try agian."
-    #   render "/post"
-    # end
-
   end
 
   def destroy
-    @post.destroy
+    authorize @post
     respond_to do |format|
-      format.html { redirect_to posts_url, notice: "Post was successfully destroyed." }
-      format.json { head :no_content }
+      if @post.destroy
+        format.html { redirect_to posts_url, notice: "Post was successfully destroyed." }
+        format.json { head :no_content }
+      end
     end
   end
 
-  def correct_user
+  def true_user
     @post = current_user.posts.find_by(id: params[:id])
     redirect_to posts_path, notice: "Not authorized to edit this Post" if @post.nil? 
   end

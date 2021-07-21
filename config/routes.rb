@@ -1,10 +1,10 @@
 Rails.application.routes.draw do
 
-  get 'guide/index'
   root 'public#index'
+  get 'guide/index'
 
   resources :posts do
-    resources :comments
+    resources :comments, controller: 'posts/comments'
     resources :answers, controller: 'posts/answers'
   end
 

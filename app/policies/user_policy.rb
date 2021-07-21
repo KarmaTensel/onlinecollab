@@ -9,7 +9,6 @@ class UserPolicy
   def index?
     @current_user.admin?
   end
-
   
   def new?
     @current_user == @user

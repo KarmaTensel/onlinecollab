@@ -2,13 +2,16 @@
   <div class="row">
 
     <div class="col-4">
-      <div class="profile-picture no-profile-picture">
-        <%# <% unless @user.avatar.nil? %>
-          <%# <%= image_tag @user.avatar, class: 'img-fluid' %> 
-        <%# <% end %>
-        <img url="" width="300" height="300">
+      <div class="w3-card-4" style="width:50%" >
+        <% if current_user.avatar.attached? %>
+            <%= image_tag(current_user.avatar, size: '350x350', class: 'rounded-circle')%>
+        <%else%>
+              <img src="https://picsum.photos/200/300?random=1">
+        <% end %>
       </div>
+
       <br>
+
       <div>
         <h2>Bio</h2>
         <p class="info">
@@ -27,6 +30,8 @@
       <p>Designation: <%= current_user.designation%></p>
 
       <p>Company: <%= current_user.company%></p>
+
+      <p>Your score: </p>
 
       <br>
       <hr >

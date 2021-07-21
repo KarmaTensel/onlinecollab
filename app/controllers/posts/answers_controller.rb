@@ -1,56 +1,58 @@
 class Posts::AnswersController < ApplicationController
-	before_action :set_answer, only: %i[ edit ]
-	before_action :set_post, only: %i[ create show edit accept update]
-    
-	def new
-		@answer = Answer.new
-	end
-	
+	after_action :verify_authorized
+	before_action :set_answer, only: %i[ create edit update destroy ]
+
 	def create
-		@answer = Answer.new(answer_params)
+		@answer = @post.answers.build(answer_params)
 		@answer.user_id = current_user.id
-		@answer.post_id = params[:post_id]
 		
 		if @answer.save
-      		flash[:notice] = "Your answer has been posted."
-      		redirect_to post_path(@post)
-    	else
-      		flash.now[:danger] = "Error posting your answer."
-    	end
+				flash[:notice] = "Your answer has been created."
+				redirect_to post_path(@post)
+		else
+				flash.now[:danger] = "Error posting answer."
+		end
+
 	end
 
 	def edit
+		authorize @answerable
+	end
+	
+	def update
+		authorize @answerable
+
+		if @answer.update(answer_params)
+			redirect_to @post, notice: "Your answer has been updated!"
+		else	
+			render 'edit'
+		end
 	end
 
-	def accept
-		@post = Post.find(params[:id])
-    @post.accepted_answer_id = @answer.id
-		Post.update(accepted_answer_id: @post.accepted_answer_id)
-		redirect_to posts_path, notice: "Answer accepted."
-  end
-
 	def destroy
-		@answer = Answer.find(params[:post_id])
+		authorize @answerable
+		@answer = @post.answers.find(params[:id])
+
 		if @answer.destroy
-			flash[:notice] = "Your answer has been deleted."
-			redirect_to post_path
+			redirect_to post_path(@post), notice: "You answer has been successfully deleted."
 		else
-			redirect_to post_path(@post), notice: "Error deleting comment."
+			redirect_to post_path(@post), notice: "Error deleting answer."
 		end
 	end
 
 	private
 
 		def set_answer
-			@answer = Answer.find(params[:id])
-		end
-
-		def set_post
 			@post = Post.find(params[:post_id])
+			@answer = @post.answers.find(params[:id])
 		end
-
+		
+	private	
 		def answer_params
-			params.require(:answer).permit(:content)
+			params.require(:answer).permit(:post_id, :content)
 		end
-
 end
+
+
+
+
