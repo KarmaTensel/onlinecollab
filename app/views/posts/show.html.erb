@@ -61,9 +61,11 @@
   </div>
 <% end %> 
 
+<%= current_user.role %>
+
 <hr class="bg-dark border-1 border-top border-success">
 <br>
-
+ 
 <div class="container">
 <h4 class="info">
   <%= pluralize(@post.comments.count, "Comment") %>

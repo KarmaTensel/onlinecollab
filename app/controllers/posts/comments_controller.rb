@@ -1,23 +1,23 @@
 class Posts::CommentsController < ApplicationController
-	before_action :set_comment, only: %i[ create edit update destroy ]
+	before_action :set_comment, only: %i[ edit update destroy ]
 
 	def create
+		@post = Post.find(params[:post_id])
 		@comment = @post.comments.build(comment_params)
 		@comment.user_id = current_user.id
 		
 		if @comment.save
-      		flash[:notice] = "Comment created."
-      		redirect_to post_path(@post)
-    	else
-      		flash.now[:danger] = "Error creating comment."
-    	end
+				flash[:notice] = "Comment created."
+				redirect_to post_path(@post)
+    else
+      	flash.now[:danger] = "Error creating comment."
+    end
 	end
 
 	def edit
 	end
 	
 	def update
-
 		if @comment.update(comment_params)
 			redirect_to @post, notice: "Your comment has been updated!"
 		else	
@@ -26,7 +26,6 @@ class Posts::CommentsController < ApplicationController
 	end
 
 	def destroy
-
 		@comment = @post.comments.find(params[:id])
 		if @comment.destroy
 			redirect_to post_path(@post), notice: "Your comment has been successfully deleted."
@@ -36,7 +35,6 @@ class Posts::CommentsController < ApplicationController
 	end
 
 	private
-
 		def set_comment
 			@post = Post.find(params[:post_id])
 			@comment = @post.comments.find(params[:id])

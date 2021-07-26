@@ -14,9 +14,13 @@
             <%= link_to 'Delete',  [answer.post, answer], method: :delete, class: "delete", data: { confirm: "Are you sure?" } %>
           <% end %>
             
-          <% if @post.user_id == current_user.id%>
-            <%= link_to 'Accept', class: "btn btn-success", data: { confirm: 'Accept answer?' } %>
-          <% end %> 
+          <% if @post.accepted_answer_id == answer.id %>
+            <p class="btn btn-warning"><b class="bi bi-check">Accepted answer</b></p>
+          <% else %>
+            <% if @post.user_id == current_user.id%>
+              <%= link_to 'Accept', accept_post_answer_path(@post, answer), class: "btn btn-secondary", data: { confirm: 'Accept answer?' } %>
+            <% end %>
+          <% end %>
           
         </div>
     </div>

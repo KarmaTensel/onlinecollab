@@ -1,12 +1,13 @@
 class Posts::AnswersController < ApplicationController
-	before_action :set_answer, only: %i[ create edit update destroy ]
+	before_action :set_answer, only: %i[ edit update accept destroy ]
 
 	def create
+		@post = Post.find(params[:post_id])
 		@answer = @post.answers.build(answer_params)
 		@answer.user_id = current_user.id
 		
 		if @answer.save
-				flash[:notice] = "Your answer has been created."
+				flash[:notice] = "Your answer has been posted."
 				redirect_to post_path(@post)
 		else
 				flash.now[:danger] = "Error posting answer."
@@ -36,6 +37,14 @@ class Posts::AnswersController < ApplicationController
 		end
 	end
 
+	def accept
+		if @post.update(accepted_answer_id: @answer.id)
+			redirect_to @post, notice: "You have accepted an answer with an ID #{@answer.id} for this post."
+		else
+			redirect_to @post, notice: "Error accepting an answer."
+		end
+	end
+
 	private
 
 		def set_answer
@@ -47,6 +56,7 @@ class Posts::AnswersController < ApplicationController
 		def answer_params
 			params.require(:answer).permit(:post_id, :content)
 		end
+
 end
 
 

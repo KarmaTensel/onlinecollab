@@ -1,7 +1,7 @@
 class PostsController < ApplicationController
   before_action :set_post, only: %i[ show edit update destroy]
   skip_before_action :authenticate_user!, :only => [:index]
-  before_action :true_user, only: [:edit, :update, :destroy]
+  # before_action :true_user, only: [:edit, :update, :destroy]
 
   def index
     @posts = Post.all.order('created_at DESC')
@@ -9,6 +9,13 @@ class PostsController < ApplicationController
 
   # GET /posts/1 or /posts/1.json
   def show
+    # if @post.status == 'Draft'
+    #   @user = current_user
+    #   authorize @user
+    # elsif @post.status == 'Archive'
+    #   @user = current_user.moderator! && current_user
+    #   authorize @user
+    # end
   end
 
   # GET /posts/new
@@ -57,16 +64,16 @@ class PostsController < ApplicationController
     end
   end
 
-  def true_user
-    @post = current_user.posts.find_by(id: params[:id])
-    redirect_to posts_path, notice: "Not authorized to edit this Post" if @post.nil? 
-  end
+  # def true_user
+  #   skip authorization
+  #   @post = current_user.posts.find_by(id: params[:id])
+  #   redirect_to posts_path, notice: "Not authorized to edit this Post" if @post.nil? 
+  # end
 
   private
 
     def set_post
       @post = Post.find(params[:id])
-      @user = @post.user.email
     end
 
     def post_params

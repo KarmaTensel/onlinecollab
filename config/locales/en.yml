@@ -30,4 +30,7 @@
 # available at https://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello world"
+  pundit:
+    default: 'You are restricted to perform this action.'
+    post_policy:
+      destroy?: 'Action restricted unless you are a Moderator.'

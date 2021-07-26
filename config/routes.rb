@@ -4,8 +4,13 @@ Rails.application.routes.draw do
   get 'guide/index'
 
   resources :posts do
+    get 'upv', on: :member
+    get 'dwv', on: :memer
+
     resources :comments, controller: 'posts/comments'
-    resources :answers, controller: 'posts/answers'
+    resources :answers, controller: 'posts/answers' do
+      get 'accept', on: :member
+    end
   end
 
   devise_scope :user do
