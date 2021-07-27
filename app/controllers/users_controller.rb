@@ -1,20 +1,18 @@
 class UsersController < ApplicationController
     before_action :authenticate_user!
-    after_action :verify_authorized
     before_action :set_user, only: %i[ show update destroy ]
   
     def new
       @users = User.new
-      authorize User
     end
 
     def index
       @users = User.all
-      authorize User
     end
   
     def show
-      authorize @user
+      @post = Post.all.reverse
+      @answer = Answer.all.reverse
     end
 
     def edit
@@ -25,7 +23,6 @@ class UsersController < ApplicationController
     end
   
     def update
-      authorize @user
       if @user.update(secure_params)
         redirect_to users_path, :notice => "User updated."
       else
@@ -34,7 +31,7 @@ class UsersController < ApplicationController
     end
   
     def destroy
-      authorize @user
+
       if @user.destroy
         redirect_to users_path, :notice => "User deleted."
       end

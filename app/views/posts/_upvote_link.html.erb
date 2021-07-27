@@ -1,0 +1,7 @@
+<% if current_user %>
+  <%# <% vote = current_user&.voted_for?(post) ? "Down" : "Up" %>
+  <%= link_to upvote_post_path(post), method: :put, remote: :true, class:"link" do %>
+    <button class="btn btn-secondary"><i class="bi bi-chevron-up"></i></button>
+    <h4 class="lf-pad"><%= @post.get_upvotes.size %></h4>
+  <% end %>
+<% end %>

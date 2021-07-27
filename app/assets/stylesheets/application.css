@@ -17,3 +17,10 @@
 @import "./actiontext.scss";
 @import "trix/dist/trix";
 
+.lf-pad{
+  padding-left: 15px;
+}
+
+.lff-pad{
+  padding-left: 10px;
+}

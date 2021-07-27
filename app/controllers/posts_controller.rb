@@ -1,5 +1,5 @@
 class PostsController < ApplicationController
-  before_action :set_post, only: %i[ show edit update destroy]
+  before_action :set_post, only: %i[ show edit update destroy upvote downvote ]
   skip_before_action :authenticate_user!, :only => [:index]
   # before_action :true_user, only: [:edit, :update, :destroy]
 
@@ -69,6 +69,16 @@ class PostsController < ApplicationController
   #   @post = current_user.posts.find_by(id: params[:id])
   #   redirect_to posts_path, notice: "Not authorized to edit this Post" if @post.nil? 
   # end
+
+  def upvote
+    @post.upvote_from current_user
+    redirect_to @post, notice: "You have upvoted this post."
+  end
+
+  def downvote
+    @post.downvote_from current_user
+    redirect_to @post, notice: "You have downvoted on this post."
+  end
 
   private
 

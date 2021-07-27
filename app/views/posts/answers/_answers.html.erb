@@ -13,12 +13,24 @@
             <%= link_to 'Edit', edit_post_answer_path(@post, answer), class:"bottom-corner"%>
             <%= link_to 'Delete',  [answer.post, answer], method: :delete, class: "delete", data: { confirm: "Are you sure?" } %>
           <% end %>
+
+          <% unless current_user.id == answer.user_id %>
+            <div class="d-flex">
+              <div id="right-div">
+                <%= render 'posts/answers/upvote', post: @post, answer: answer %>
+              </div>
+
+              <div id="right-div">
+                <%= render 'posts/answers/downvote', post: @post, answer: answer %>
+              </div>
+            </div>
+          <% end %>
             
           <% if @post.accepted_answer_id == answer.id %>
-            <p class="btn btn-warning"><b class="bi bi-check">Accepted answer</b></p>
+            <p class="btn btn-warning" id="bt-corner"><b class="bi bi-check">Accepted by OP</b></p>
           <% else %>
             <% if @post.user_id == current_user.id%>
-              <%= link_to 'Accept', accept_post_answer_path(@post, answer), class: "btn btn-secondary", data: { confirm: 'Accept answer?' } %>
+              <%= link_to 'Accept', accept_post_answer_path(@post, answer), class: "btn btn-secondary",id:"bt-corner",  data: { confirm: 'Accept answer?' } %>
             <% end %>
           <% end %>
           

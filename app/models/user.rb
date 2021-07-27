@@ -1,6 +1,7 @@
 class User < ApplicationRecord
 
   has_one_attached :avatar
+  acts_as_voter
 
   enum role: [:user, :employee, :moderator, :admin]
 

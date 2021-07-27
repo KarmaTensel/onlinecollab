@@ -7,6 +7,8 @@ class Post < ApplicationRecord
 
 	belongs_to :user
 
+	acts_as_votable
+
 	validates :title, :tags, :content, :status, :visibility, :user_id, presence: true
 
 	scope :post_all, -> { where(visibility: 'All') }

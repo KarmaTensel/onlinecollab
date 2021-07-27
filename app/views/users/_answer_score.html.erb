@@ -1,0 +1,25 @@
+<% @answer.each do |answer| %>
+  <% @post.each do |post| %>
+    <p>
+      <% if answer.user_id == current_user.id %>
+        <% votes = answer.get_upvotes.sum(:vote_weight)-answer.get_downvotes.sum(:vote_weight) %>
+
+        <% if post.accepted_answer_user_id == current_user.id %>
+          <% votes += 10 %>
+        
+          <%= link_to post_path(Post.find_by(id: answer.post_id)), class:"link" do %>
+            <% if votes < 0 %>
+              Answered on post ID <%= answer.post_id %> &nbsp; <b class="vote-con1"><%= votes %></b>
+            <% elsif votes == 0%>
+              Answered on post ID <%= answer.post_id %> &nbsp; <b class="info"><%= votes %></b>
+            <% else %>
+              Answered on post ID <%= answer.post_id %> &nbsp; <b class="vote-con3">+<%= votes %></b>
+            <% end %>
+          <% end %>
+
+        <% end %>
+
+      <% end %>
+    </p>
+  <% end %>
+<% end %>

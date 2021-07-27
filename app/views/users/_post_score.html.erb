@@ -1,0 +1,21 @@
+<% @post.each do |post| %>
+  <p>
+    <% if post.user_id == current_user.id %>
+      <% votes = post.get_upvotes.sum(:vote_weight)-post.get_downvotes.sum(:vote_weight) %>
+      
+      <%= link_to post_path(post), class:"link" do %>
+        
+        <% if votes < 0 %>
+          <%= post.title %> &nbsp; <b class="vote-con1"><%= votes %></b>
+        <% elsif votes == 0 %>
+          <%= post.title %> &nbsp; <b class="info"><%= votes %></b>
+        <% else %>
+          <%= post.title %> &nbsp; <b class="vote-con3">+<%= votes %></b>
+        <% end %>
+
+      <% end %>
+
+    <% end %>
+
+  </p>
+<% end %>

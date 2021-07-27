@@ -14,9 +14,10 @@
 
       <div>
         <h2>Bio</h2>
-        <p class="info">
-          <%= @user.bio %>
-        </p>
+        <p class="info"> <%= @user.bio %> </p>
+
+        <h2>Your score</h2>
+        <h4 class="info"> <%= user_score() %> </h4>
       </div>
     </div>
 
@@ -33,12 +34,32 @@
 
       <p>Your score: </p>
 
-      <br>
-      <hr >
       <p> You have <strong><%= pluralize(Post.draft_count, 'post')%></strong> in your draft. </p>
 
       <%= link_to "Edit profile", edit_user_path, class:"btn btn-primary" %>
+      <hr >
 
+      <div class="container">
+        <div class="row">
+
+          <div class="col-sm">
+            <div class="overflow-auto">
+              <h4 class="info">My posts</h4>
+              <%= render 'users/post_score' %>
+            </div>
+          </div>
+
+          <div class="col-sm">
+            <div class="overflow-auto">
+              <h4 class="info">My answers</h4>
+              <%= render 'users/answer_score' %>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    
     </div>
 
   </div>

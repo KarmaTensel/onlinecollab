@@ -4,12 +4,14 @@ Rails.application.routes.draw do
   get 'guide/index'
 
   resources :posts do
-    get 'upv', on: :member
-    get 'dwv', on: :memer
-
+    put 'upvote', on: :member
+    put 'downvote', on: :member
+    
     resources :comments, controller: 'posts/comments'
     resources :answers, controller: 'posts/answers' do
       get 'accept', on: :member
+      put 'upvote', on: :member
+      put 'downvote', on: :member
     end
   end
 

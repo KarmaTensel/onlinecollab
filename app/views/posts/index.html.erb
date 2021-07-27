@@ -5,7 +5,7 @@
   <% unless post.published_at == 'nil' %>
 
     <div class="jumbotron">
-      <p class="mb-3"><strong>Title: </strong><%= post.title %> ~ <b>@</b><%= post.user.email %></p>
+      <p class="mb-3"><strong>Title: </strong><%= post.title %> ~ <b>@</b><%= post.user.username %></p>
 
       <p> <strong>Relevance: </strong><%= post.tags %> </p>
 
