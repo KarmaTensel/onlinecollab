@@ -33,7 +33,7 @@ class PostsController < ApplicationController
     @post.user_id = current_user.id
 
     respond_to do |format|
-      if @post.save
+      if @post.save && @subpost.save
         format.html { redirect_to @post, notice: "Post was successfully created." }
         format.json { render :show, status: :created, location: @post }
       else
@@ -87,7 +87,11 @@ class PostsController < ApplicationController
     end
 
     def post_params
-      params.require(:post).permit(:title, :tags, :content, :status, :visibility, :publish_at)
+      params.require(:post).permit(:title, :tags, :content, :status, :visibility,
+       :publish_at,
+       subposts_attributes:{
+          :title
+       })
     end
     
 end

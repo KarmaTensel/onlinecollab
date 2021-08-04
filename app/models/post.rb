@@ -4,8 +4,11 @@ class Post < ApplicationRecord
 	has_rich_text :content
 	has_many :comments, dependent: :destroy
 	has_many :answers, dependent: :destroy
+	has_one :subposts, dependent: :destroy
 
 	belongs_to :user
+
+	accepts_nested_attributes_for :subposts, allow_destroy: true
 
 	acts_as_votable
 

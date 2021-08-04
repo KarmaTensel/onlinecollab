@@ -18,7 +18,7 @@
   
 <p>
   <strong>Posted by:</strong>
-  <%= @user %>
+  <%= @post.user.username %>
 </p>
 
 <p>
@@ -38,7 +38,7 @@
     </div>
 
     <div id="right-div">
-      <%= link_to 'Destroy', @post, method: :delete, data: { confirm: 'Are you sure?' }, class:"btn btn-danger"%>
+      <%= link_to 'Delete', @post, method: :delete, data: { confirm: 'Are you sure?' }, class:"btn btn-danger"%>
     </div>
    <% end %>
 
@@ -85,7 +85,7 @@
     <% if current_user.id == comment.user_id %>
       <%= link_to 'Edit', edit_post_comment_path(@post, comment), class:"bottom-corner" %>
       <%= link_to 'Delete', [comment.post, comment], method: :delete, class: "delete", data: { confirm: "Are you sure?" } %>
-    <% end %>
+    <% end %> 
   </div>
 
   <hr>
